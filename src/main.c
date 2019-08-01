@@ -38,16 +38,10 @@ MPI_Request sendRequest, recRequest;
 int comm_sz;
 
 
- /* crack function prototype */
+ /* function prototypes */
  bool crack(char *target, char *str, int max_length);
+ void uppercase(char *string);
 
-
- /* uppercase function modifies a string to only contain uppercase characters */
- void uppercase(char *string) {
-  for (int i = 0; string[i] != '\0'; i++) {
-    string[i] = toupper(string[i]);
-  }
- }
 
 int main(int argc, char *argv[]) {
 
@@ -101,7 +95,6 @@ int main(int argc, char *argv[]) {
   int count = strlen(valid_chars) / comm_sz;
   int end;
   int start = rank*count;
-
 
   if (rank == comm_sz-1) {
     end = strlen(valid_chars);
@@ -190,4 +183,11 @@ int main(int argc, char *argv[]) {
 
   free(strcp);
   return false;
+ }
+
+  /* uppercase function modifies a string to only contain uppercase characters */
+ void uppercase(char *string) {
+  for (int i = 0; string[i] != '\0'; i++) {
+    string[i] = toupper(string[i]);
+  }
  }
