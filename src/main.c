@@ -61,8 +61,10 @@ int main(int argc, char *argv[]) {
   MPI_Init(&argc, &argv);
 
   int comm_sz;
+  double time = MPI_Wtime();
   MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
 
   int length = atoi(argv[1]);
   char *target = argv[2];
@@ -128,7 +130,8 @@ int main(int argc, char *argv[]) {
     MPI_Recv(found_pw, 100, MPI_CHAR, MPI_ANY_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
   if (rank == 0) {
-    printf("Operation complete.\n");
+    printf("Operation completed.\n");
+    printf("Total time elapsed: %.2fs\n", MPI_Wtime()-time);
 
     if (strlen(found_pw) > 0)
       printf("Recovered password: %s\n", found_pw);
